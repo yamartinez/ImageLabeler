@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body style="width:100%;text-align:center">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <h1>Image Labeler</h1>
+        <div style="width:60%;margin:0 auto">
+            <div style="width:100%" id="image_container"></div>
+            <button onclick="label('class1')">Class 1</button>
+            <button onclick="label('class2')">Class 2</button>
+        </div>
+        <script>
+            let current_image = ''
+            
+            function loadImage(){
+                let cont = document.getElementById('image_container');
+                fetch('/getSample').then((res)=>{
+                    res.json().then((r)=>{
+                        if(!r.err){
+                            current_image = r.img;
+                            cont.innerHTML = `<img src=/Unlabeled/${current_image} alt='no image' style="width:100%">`
+                        } else {
+                            alert(r.err)
+                        }
+                    })
+                })
+            }
+
+            function label(ans){
+                let params = {
+                    method:"POST",
+                }
+                fetch(`/postRes/${current_image}/${ans}`,params).then((res)=>{
+                    loadImage()
+                })
+            }
+
+        </script>
+    </body>
+</html>
+
+<script>
+loadImage()
+</script>

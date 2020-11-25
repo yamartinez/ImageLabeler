@@ -1,0 +1,14 @@
+{
+  "name": "data_labeler",
+  "version": "1.0.0",
+  "description": "Label data, specifically images, for machine learning ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yudel Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
